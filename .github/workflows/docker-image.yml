@@ -33,13 +33,16 @@ jobs:
       run: |
         docker build -t my-app .
     
-    - name: Run container and extract Vite build artifacts
+    - name: Build Docker image and extract Vite build artifacts
       run: |
+        # Build only the builder stage
+        docker build --target builder -t my-app-builder .
+        
         # Create output directory
         mkdir -p ./dist
         
-        # Run container and copy Vite build files
-        docker run --name temp-container my-app
+        # Create a temporary container and copy files
+        docker create --name temp-container my-app-builder
         docker cp temp-container:/app/dist/. ./dist/
         docker rm temp-container
     
