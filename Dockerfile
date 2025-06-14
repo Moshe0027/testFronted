@@ -1,5 +1,5 @@
 # Multi-stage build for Vite React app (no TypeScript)
-FROM node:18-alpine AS builder
+FROM node:22-slim AS build
 
 WORKDIR /app
 
